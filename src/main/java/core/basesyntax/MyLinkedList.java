@@ -3,22 +3,9 @@ package core.basesyntax;
 import java.util.List;
 
 public class MyLinkedList<T> implements MyLinkedListInterface<T> {
-
     private Node<T> head;
     private Node<T> tail;
     private int size;
-
-    private static class Node<T> {
-        private T value;
-        private Node<T> next;
-        private Node<T> prev;
-
-        public Node(Node<T> prev, T value, Node<T> next) {
-            this.prev = prev;
-            this.value = value;
-            this.next = next;
-        }
-    }
 
     @Override
     public void add(T value) {
@@ -42,7 +29,7 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
             add(value);
             return;
         }
-        Node<T> currentNode = getNodeByIndex(index);
+        Node<T> currentNode = findNodeByIndex(index);
         Node<T> newNode = new Node<>(currentNode.prev, value, currentNode);
         if (currentNode.prev != null) {
             currentNode.prev.next = newNode;
@@ -66,13 +53,13 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
     @Override
     public T get(int index) {
         checkIndex(index);
-        return getNodeByIndex(index).value;
+        return findNodeByIndex(index).value;
     }
 
     @Override
     public T set(T value, int index) {
         checkIndex(index);
-        Node<T> nodeToChange = getNodeByIndex(index);
+        Node<T> nodeToChange = findNodeByIndex(index);
         T oldValue = nodeToChange.value;
         nodeToChange.value = value;
         return oldValue;
@@ -81,7 +68,7 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
     @Override
     public T remove(int index) {
         checkIndex(index);
-        Node<T> node = getNodeByIndex(index);
+        Node<T> node = findNodeByIndex(index);
         return unlink(node);
     }
 
@@ -120,7 +107,7 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
         }
     }
 
-    private Node<T> getNodeByIndex(int index) {
+    private Node<T> findNodeByIndex(int index) {
         checkIndex(index);
         Node<T> currentNode;
         if (index < size / 2) {
@@ -158,5 +145,17 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
 
         T nodeValue = node.value;
         return nodeValue;
+    }
+
+    private static class Node<T> {
+        private T value;
+        private Node<T> next;
+        private Node<T> prev;
+
+        public Node(Node<T> prev, T value, Node<T> next) {
+            this.prev = prev;
+            this.value = value;
+            this.next = next;
+        }
     }
 }
