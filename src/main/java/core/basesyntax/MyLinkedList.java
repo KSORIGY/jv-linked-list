@@ -127,14 +127,12 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
     private T unlink(Node<T> node) {
         Node<T> prevNode = node.prev;
         Node<T> nextNode = node.next;
-
         if (prevNode == null) {
             head = nextNode;
         } else {
             prevNode.next = nextNode;
             node.prev = null;
         }
-
         if (nextNode == null) {
             tail = prevNode;
         } else {
@@ -142,7 +140,8 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
             node.next = null;
         }
         size--;
-
+        node.prev = null;
+        node.next = null;
         T nodeValue = node.value;
         node.value = null;
         return nodeValue;
