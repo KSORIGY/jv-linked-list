@@ -144,6 +144,7 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
         size--;
 
         T nodeValue = node.value;
+        node.value = null;
         return nodeValue;
     }
 
